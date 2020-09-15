@@ -113,6 +113,10 @@ class _TesteBdState extends State<TesteBd> {
                 int id2 = await txn.rawInsert(
                     'INSERT INTO teste2( nome) VALUES ("TESTE DE NOME")');
                 print('teste 2 Registro: ' + id2.toString());
+
+                int id3 = await txn.rawInsert(
+                    'INSERT INTO teste3 ( nome) VALUES ("TESTE DE NOME")');
+                print('teste 2 Registro: ' + id3.toString());
               });
             },
           ),
@@ -143,6 +147,12 @@ class _TesteBdState extends State<TesteBd> {
                   });
                 });
               }),
+          RaisedButton(
+              child: Text('criar tabela depois das outras'),
+              onPressed: () async {
+                await database.execute(
+                    'CREATE TABLE if not exists teste3 (codigo INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT)');
+              }),
           Container(
             color: Colors.green,
             width: 300,
@@ -166,7 +176,7 @@ class _TesteBdState extends State<TesteBd> {
   Future<List> listaTabela() async {
     // Get the records
 
-    var lista = await database.rawQuery('SELECT * FROM teste2');
+    var lista = await database.rawQuery('SELECT * FROM teste3');
     return lista.toList();
   }
 }
